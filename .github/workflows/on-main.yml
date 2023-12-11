@@ -1,0 +1,52 @@
+name: Build Main
+
+on:
+  workflow_dispatch:
+    inputs:
+      dockerfile:
+        type: choice
+        description: "Suffix of the Dockerfile to use"
+        options:
+        - "community"
+        - "oracle"
+      image_name:
+        type: string
+        description: "Name of the image to build"
+        default: "my-native-image"
+      image_tag:
+        type: string
+        description: "Tag of the image to build"
+        default: "latest"
+
+jobs:
+  build-quarkus:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: Setup JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'zulu'
+    - name: Build native docker image (${{ github.event.inputs.dockerfile }})
+      run: |
+        docker build -f Dockerfile.${{ github.event.inputs.dockerfile }} -t ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }} .
+    - name: Build with Gradle
+      uses: gradle/gradle-build-action@v2
+      with:
+        gradle-version: wrapper
+        arguments: |
+          -Dorg.gradle.jvmargs=-Xmx1g
+          -x test quarkusIntTest
+          -Dquarkus.package.type=native
+          -Dquarkus.native.container-build=true
+          -Dquarkus.native.builder-image=${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }}
+          -Dquarkus.container-image.build=true
+          -Dquarkus.container-image.push=false
+          -Dquarkus.container-image.registry=local
+          -Dquarkus.container-image.tag=${{ github.event.inputs.image_tag }}
+          -Dquarkus.native.builder-image.pull=missing
+          -Pversion=undefined
