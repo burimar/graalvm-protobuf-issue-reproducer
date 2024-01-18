@@ -1,4 +1,4 @@
 FROM ghcr.io/graalvm/native-image-community:21
 WORKDIR /project
 VOLUME ["/project"]
-ENTRYPOINT ["native-image"]
+ENTRYPOINT ["native-image", "--native-image-info", "--verbose"]

@@ -1,4 +1,4 @@
 FROM container-registry.oracle.com/graalvm/native-image:21-ol9
 WORKDIR /project
 VOLUME ["/project"]
-ENTRYPOINT ["native-image"]
+ENTRYPOINT ["native-image", "--native-image-info", "--verbose"]
