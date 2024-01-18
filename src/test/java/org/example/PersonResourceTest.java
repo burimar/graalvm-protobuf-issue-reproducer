@@ -3,6 +3,7 @@ package org.example;
 import com.google.protobuf.util.Timestamps;
 import io.quarkus.test.junit.QuarkusTest;
 import org.example.raw.Person;
+import org.jboss.logging.Logger;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
@@ -14,8 +15,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @QuarkusTest
 class PersonResourceTest {
 
+    private static final Logger LOG = Logger.getLogger(PersonResourceTest.class);
+
     @Test
     void testPersonEndpoint() throws Exception {
+        LOG.info("Running testPersonEndpoint");
+
         var now = Timestamps.fromMillis(Instant.now().toEpochMilli());
         var person = Person.newBuilder()
                 .setName("Alice")

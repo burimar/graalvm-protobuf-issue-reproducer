@@ -19,6 +19,7 @@ public class PersonResource {
     @POST
     @Consumes(MediaType.APPLICATION_OCTET_STREAM)
     public Response setPerson(byte[] personData) {
+        LOG.info("Received person data");
         try {
             person = Person.parseFrom(personData);
             return Response.status(201).build();
