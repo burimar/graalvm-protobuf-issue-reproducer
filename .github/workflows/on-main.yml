@@ -50,3 +50,4 @@ jobs:
           -Dquarkus.container-image.tag=${{ github.event.inputs.image_tag }}
           -Dquarkus.native.builder-image.pull=missing
           -Pversion=undefined
+          --scan
