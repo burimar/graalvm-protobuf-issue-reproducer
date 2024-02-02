@@ -7,7 +7,7 @@ docker build -f Dockerfile."${1}" -t $IMAGE_NAME:$IMAGE_TAG .
 
 ./gradlew \
  -Dorg.gradle.jvmargs=-Xmx1g \
- -x test quarkusIntTest \
+ -x test clean quarkusIntTest \
  -Dquarkus.package.type=native \
  -Dquarkus.native.container-build=true \
  -Dquarkus.native.builder-image=$IMAGE_NAME:$IMAGE_TAG \
