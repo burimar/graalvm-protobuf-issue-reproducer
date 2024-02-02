@@ -15,6 +15,7 @@ dependencies {
 
     implementation 'io.quarkus:quarkus-arc'
     implementation 'io.quarkus:quarkus-resteasy-reactive'
+    implementation 'io.quarkus:quarkus-container-image-jib'
 
     // dependencies for native build
     implementation 'net.java.dev.jna:jna'
