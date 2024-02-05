@@ -1,0 +1,239 @@
+__  ____  __  _____   ___  __ ____  ______ 
+ --/ __ \/ / / / _ | / _ \/ //_/ / / / __/ 
+ -/ /_/ / /_/ / __ |/ , _/ ,< / /_/ /\ \   
+--\___\_\____/_/ |_/_/|_/_/|_|\____/___/   
+2024-02-05 09:42:29,906 INFO  [io.quarkus] (main) graalvm-protobuf-issue-reproducer 1.0.0-SNAPSHOT native (powered by Quarkus 3.6.1) started in 0.032s. Listening on: http://0.0.0.0:8081
+2024-02-05 09:42:29,906 INFO  [io.quarkus] (main) Profile prod activated. 
+2024-02-05 09:42:29,906 INFO  [io.quarkus] (main) Installed features: [cdi, resteasy-reactive, smallrye-context-propagation, vertx]
+2024-02-05 09:42:32,690 INFO  [org.exa.PersonResource] (executor-thread-1) Received person data
+2024-02-05 09:42:32,690 INFO  [org.exa.PersonResource] (executor-thread-1) The person: timestamp {
+  seconds: 1707126150
+  nanos: 885000000
+}
+age: 95
+name: "Alice"
+
+2024-02-05 09:42:32,820 INFO  [org.exa.PersonResource] (executor-thread-1) Get person data
+
+[ [ SegfaultHandler caught a segfault in thread 0x00007fd4bc000b80 ] ]
+siginfo: si_signo: 11, si_code: 2, si_addr: 0x00007fd4d04b1b4c (heapBase + 53156684)
+
+General purpose register values:
+  RAX 0x0000000000656369 points into AOT compiled code com.oracle.svm.core.reflect.ReflectionAccessorHolder.invoke_47bea53e2afb860ce9807430c1022e7cd2df76ac(ReflectionAccessorHolder.java)
+  RBX 0x0000000000000011 is an unknown value
+  RCX 0x00007fd4d04b1b48 is an unknown value
+  RDX 0x0000000000000005 is an unknown value
+  RBP 0x0000000000000012 is an unknown value
+  RSI 0x0000000000000011 is an unknown value
+  RDI 0x00007fd4cf014b88 points into an aligned TLAB chunk of thread 0x00007fd4bc000b80
+  RSP 0x00007fd4c5ffaaa0 points into the stack for thread 0x00007fd4bc000b80
+  R8  0x0000000000000005 is an unknown value
+  R9  0x0000000000000012 is an unknown value
+  R10 0x00007fd4cf0060b0 points into an aligned TLAB chunk of thread 0x00007fd4bc000b80
+    is an object of type java.lang.String
+  R11 0x0000000000000293 is an unknown value
+  R12 0x00000000011516bb points into AOT compiled code java.io.FileOutputStream.writeBytes(Native Method)
+  R13 0x00007fd4c5ffa5d8 points into the stack for thread 0x00007fd4bc000b80
+  R14 0x00007fd4cd200000 is the heap base
+  R15 0x00007fd4bc000b80 is a thread
+  EFL 0x0000000000010206 is an unknown value
+  RIP 0x0000000000447358 points into AOT compiled code com.google.protobuf.CodedOutputStream$ArrayEncoder.writeUInt32NoTag(CodedOutputStream.java)
+  
+Printing instructions (ip=0x0000000000447358):
+  0x0000000000447258: 0x0f 0x83 0x09 0x00 0x00 0x00 0x48 0x8b 0xf8 0xe8 0x1a 0x12 0x00 0x00 0x90 0x48
+  0x0000000000447268: 0x8d 0x74 0x24 0x30 0x48 0x8b 0xf8 0x90 0xe8 0xcb 0x6e 0x25 0x00 0x90 0x41 0x0f
+  0x0000000000447278: 0xb7 0x7c 0xf6 0x08 0x8d 0xbf 0x4b 0xec 0xff 0xff 0x83 0xff 0x03 0x73 0xe0 0xeb
+  0x0000000000447288: 0xd5 0x41 0x0f 0xb7 0x7c 0xf6 0x08 0x8d 0xbf 0x4b 0xec 0xff 0xff 0x83 0xff 0x03
+  0x0000000000447298: 0x72 0xc4 0xeb 0xcb 0x41 0x0f 0xb7 0x7c 0xf6 0x08 0x8d 0xbf 0x4b 0xec 0xff 0xff
+  0x00000000004472a8: 0x83 0xff 0x03 0x72 0xb1 0xeb 0xb8 0x41 0x0f 0xb7 0x7c 0xf6 0x08 0x8d 0xbf 0x4b
+  0x00000000004472b8: 0xec 0xff 0xff 0x83 0xff 0x03 0x72 0x9e 0xeb 0xa5 0xcc 0xcc 0xcc 0xcc 0xcc 0xcc
+  0x00000000004472c8: 0xcc 0xcc 0xcc 0xcc 0xcc 0xcc 0xcc 0xcc 0x48 0x8d 0x5c 0x24 0xc8 0x49 0x3b 0x5f
+  0x00000000004472d8: 0x08 0x0f 0x86 0x81 0x43 0x16 0x00 0x48 0x8b 0xe3 0x8b 0x47 0x04 0x8b 0x57 0x0c
+  0x00000000004472e8: 0x49 0x8d 0x0c 0xc6 0x8b 0xda 0x66 0x90 0x8b 0xd6 0x8b 0xf3 0x8b 0xeb 0xff 0xc5
+  0x00000000004472f8: 0xf7 0xc2 0x80 0xff 0xff 0xff 0x0f 0x84 0x46 0x00 0x00 0x00 0x89 0x6f 0x0c 0x85
+  0x0000000000447308: 0xc0 0x0f 0x84 0x6b 0x00 0x00 0x00 0x45 0x8b 0x44 0xc6 0x04 0x44 0x3b 0xc3 0x0f
+  0x0000000000447318: 0x86 0x39 0x02 0x00 0x00 0x8b 0xda 0x83 0xe3 0x7f 0x81 0xcb 0x80 0x00 0x00 0x00
+  0x0000000000447328: 0x88 0x5c 0x31 0x08 0x8b 0xf2 0xc1 0xee 0x07 0x41 0x83 0x6f 0x10 0x01 0x0f 0x8e
+  0x0000000000447338: 0x04 0x00 0x00 0x00 0x8b 0xdd 0xeb 0xb0 0xe8 0x0b 0x2f 0x27 0x00 0x90 0x8b 0xdd
+  0x0000000000447348: 0xeb 0xa6 0x89 0x6f 0x0c 0x66 0x66 0x90 0x85 0xc0 0x0f 0x84 0x3d 0x02 0x00 0x00
+> 0x0000000000447358: 0x45 0x8b 0x44 0xc6 0x04 0x44 0x3b 0xc3 0x0f 0x86 0x55 0x02 0x00 0x00 0x88 0x54
+  0x0000000000447368: 0x31 0x08 0x48 0x83 0xc4 0x38 0x41 0x83 0x6f 0x10 0x01 0x0f 0x8e 0xd7 0x2e 0x27
+  0x0000000000447378: 0x00 0xc3 0xe8 0x01 0xa3 0x25 0x00 0x90 0x48 0x8b 0xcf 0x8b 0x38 0xc1 0xef 0x05
+  0x0000000000447388: 0x41 0x0f 0xb7 0x7c 0xfe 0x08 0x8d 0xbf 0x4b 0xec 0xff 0xff 0x83 0xff 0x03 0x0f
+  0x0000000000447398: 0x83 0xa7 0x01 0x00 0x00 0x48 0x89 0x44 0x24 0x28 0x8d 0xbb 0x81 0x00 0x00 0x00
+  0x00000000004473a8: 0x49 0x8d 0x96 0x80 0x57 0x88 0x00 0x90 0x81 0xff 0x00 0x01 0x00 0x00 0x0f 0x82
+  0x00000000004473b8: 0xc0 0x01 0x00 0x00 0x48 0x8b 0xfa 0x49 0x8b 0x77 0x28 0x48 0x8d 0x5e 0x08 0x49
+  0x00000000004473c8: 0x2b 0xfe 0x48 0xc1 0xe7 0x02 0x66 0x90 0x49 0x3b 0x5f 0x20 0x0f 0x87 0x4b 0x04
+  0x00000000004473d8: 0x00 0x00 0x49 0x89 0x5f 0x28 0x0f 0x18 0x86 0xc8 0x00 0x00 0x00 0x89 0x3e 0x89
+  0x00000000004473e8: 0x6e 0x04 0x8b 0x59 0x08 0x8d 0xbb 0x80 0x00 0x00 0x00 0x81 0xff 0x00 0x01 0x00
+  0x00000000004473f8: 0x00 0x0f 0x82 0x6a 0x01 0x00 0x00 0x49 0x8b 0x7f 0x28 0x48 0x8d 0x6f 0x08 0x49
+  0x0000000000447408: 0x2b 0xd6 0x48 0xc1 0xe2 0x02 0x66 0x90 0x49 0x3b 0x6f 0x20 0x0f 0x87 0xde 0x03
+  0x0000000000447418: 0x00 0x00 0x49 0x89 0x6f 0x28 0x0f 0x18 0x87 0xc8 0x00 0x00 0x00 0x89 0x17 0x89
+  0x0000000000447428: 0x5f 0x04 0x49 0x8d 0x96 0x28 0x11 0x96 0x00 0x49 0x8b 0x5f 0x28 0x48 0x8d 0x6b
+  0x0000000000447438: 0x20 0x49 0x2b 0xd6 0x48 0xc1 0xe2 0x02 0x49 0x3b 0x6f 0x20 0x0f 0x87 0x7f 0x03
+  0x0000000000447448: 0x00 0x00 0x49 0x89 0x6f 0x28 0x0f 0x18 0x83 0xe0 0x00 0x00 0x00 0x0f 0x18 0x83
+
+Top of stack (sp=0x00007fd4c5ffaaa0):
+  0x00007fd4c5ffaa80: 0x00007fd4ce0ed528 0x00007fd4cf014b68 0x00007fd4cf0060b0 0x000000000179b43e
+> 0x00007fd4c5ffaaa0: 0x00000000c5ffaad0 0x0000000000447915 0x00007fd4cd200000 0x0000000000000017
+  0x00007fd4c5ffaac0: 0x00000004cd81e7a0 0x00000005019a17b0 0x0000000000000017 0x000000000044709a
+  0x00007fd4c5ffaae0: 0x00007fd4cf014b88 0x0000000000538208 0x00007fd4cf0060b0 0x00007fd4cf014b88
+  0x00007fd4c5ffab00: 0x0000001100000017 0x0000000000446aa5 0x34c00740cf014240 0x0000000000446407
+  0x00007fd4c5ffab20: 0x00007fd4cdd99b10 0x00007fd4cf0060b0 0x00007fd4cf0141d0 0x0000000000445d2f
+  0x00007fd4c5ffab40: 0x00007fd4cf0060f8 0x0000000000502c1a 0x0000005fcf005418 0x0000000001a46fcf
+  0x00007fd4c5ffab60: 0x00007fd4cf0060d0 0x00007fd4cf014b88 0x00007fd4cf0060d0 0x000000000042c617
+  0x00007fd4c5ffab80: 0x00007fd4ce072d30 0x00007fd4cf014b88 0x00007fd4cf014b68 0x00007fd4cf0060d0
+  0x00007fd4c5ffaba0: 0x00000017cd200000 0x0000000001a38fc5 0x00007fd4ce0ed328 0x00007fd4cd200000
+  0x00007fd4c5ffabc0: 0x00007fd4ce0ffe18 0x001dffc3003c0a9a 0x00007fd4ce0776b0 0x00007fd4cdb63b18
+  0x00007fd4c5ffabe0: 0x00007fd4cf0054d0 0x0000000001b0ee36 0x0000000000000000 0x00007fd4cf199ee0
+  0x00007fd4c5ffac00: 0x00007fd4ce0ffe68 0x0000000000c8fbf3 0x00007fd4c5ffac00 0x0000000001ab8e8c
+  0x00007fd4c5ffac20: 0x00000000c5ffac50 0x000000000179b43e 0x003b2b19cf000938 0x00007fd4cef958c8
+  0x00007fd4c5ffac40: 0x00007fd4cf199ee0 0x000000000010a279 0x00007fd4cd200000 0x0000000000000000
+  0x00007fd4c5ffac60: 0x00007fd4cefe44d8 0x0000000000de1616 0x00000006fc23ac00 0x00007fdccd3318cd
+  0x00007fd4c5ffac80: 0x00007fd4c5fface0 0x00007fd4cf199b98 0x00007fd4cd801e38 0x0010a279cd200000
+
+VM thread locals for the failing thread 0x00007fd4bc000b80:
+  0 (8 bytes): JNIThreadLocalEnvironment.jniFunctions = (bytes) 
+    0x00007fd4bc000b80: 0x00007fd4cda29008
+  8 (8 bytes): StackOverflowCheckImpl.stackBoundaryTL = (Word) 1 (0x0000000000000001)
+  16 (4 bytes): Safepoint.safepointRequested = (int) 2147457650 (0x7fff9a72)
+  20 (4 bytes): StatusSupport.statusTL = (int) 1 (0x00000001)
+  24 (32 bytes): ThreadLocalAllocation.regularTLAB = (bytes) 
+    0x00007fd4bc000b98: 0x00007fd4cf000000 0x00007fd4cf080000
+    0x00007fd4bc000ba8: 0x00007fd4cf014bb8 0x0000000000000000
+  56 (8 bytes): JavaFrameAnchors.lastAnchor = (Word) 0 (0x0000000000000000)
+  64 (8 bytes): PlatformThreads.currentVThreadId = (long) 90 (0x000000000000005a)
+  72 (4 bytes): PlatformThreads.currentThread = (Object) io.vertx.core.impl.VertxThread (0x00007fd4cef957f0)
+  80 (8 bytes): ActionOnExitSafepointSupport.returnIP = (Word) 0 (0x0000000000000000)
+  88 (8 bytes): ActionOnExitSafepointSupport.returnSP = (Word) 0 (0x0000000000000000)
+  96 (8 bytes): SubstrateDiagnostics.threadOnlyAttachedForCrashHandler = (bytes) 
+    0x00007fd4bc000be0: 0x0000000000000000
+  104 (8 bytes): ThreadLocalAllocation.allocatedBytes = (Word) 0 (0x0000000000000000)
+  112 (8 bytes): VMThreads.IsolateTL = (Word) 140551951220736 (0x00007fd4cd200000)
+  120 (8 bytes): VMThreads.OSThreadHandleTL = (Word) 140551831664192 (0x00007fd4c5ffb640)
+  128 (8 bytes): VMThreads.OSThreadIdTL = (Word) 14 (0x000000000000000e)
+  136 (8 bytes): VMThreads.StackBase = (Word) 140551831666688 (0x00007fd4c5ffc000)
+  144 (8 bytes): VMThreads.StackEnd = (Word) 140551823282176 (0x00007fd4c57fd000)
+  152 (8 bytes): VMThreads.StartedByCurrentIsolate = (bytes) 
+    0x00007fd4bc000c18: 0x0000000000000001
+  160 (8 bytes): VMThreads.nextTL = (Word) 140551395478400 (0x00007fd4ac000b80)
+  168 (8 bytes): VMThreads.unalignedIsolateThreadMemoryTL = (Word) 140551663913824 (0x00007fd4bc000b60)
+  176 (4 bytes): ExceptionUnwind.currentException = (Object) null
+  180 (4 bytes): IsolatedCompileClient.currentClient = (Object) null
+  184 (4 bytes): IsolatedCompileContext.currentContext = (Object) null
+  188 (4 bytes): JNIObjectHandles.handles = (Object) com.oracle.svm.core.handles.ThreadLocalHandles (0x00007fd4cf005210)
+  192 (4 bytes): JNIThreadLocalPendingException.pendingException = (Object) null
+  196 (4 bytes): JNIThreadLocalReferencedObjects.referencedObjectsListHead = (Object) null
+  200 (4 bytes): JNIThreadOwnedMonitors.ownedMonitors = (Object) null
+  204 (4 bytes): NoAllocationVerifier.openVerifiers = (Object) null
+  208 (4 bytes): ThreadingSupportImpl.activeTimer = (Object) null
+  212 (4 bytes): ActionOnExitSafepointSupport.actionTL = (int) 0 (0x00000000)
+  216 (4 bytes): ActionOnTransitionToJavaSupport.actionTL = (int) 0 (0x00000000)
+  220 (4 bytes): ImplicitExceptions.implicitExceptionsAreFatal = (int) 0 (0x00000000)
+  224 (4 bytes): StackOverflowCheckImpl.yellowZoneStateTL = (int) 2130640638 (0x7efefefe)
+  228 (4 bytes): StatusSupport.safepointBehaviorTL = (int) 1 (0x00000001)
+  232 (4 bytes): ThreadingSupportImpl.currentPauseDepth = (int) 0 (0x00000000)
+  
+Java frame anchors for the failing thread 0x00007fd4bc000b80:
+  No anchors
+  
+Stacktrace for the failing thread 0x00007fd4bc000b80 (A=AOT compiled, J=JIT compiled, D=deoptimized, i=inlined):
+  A  SP 0x00007fd4c5ffaaa0 IP 0x0000000000447358 size=64    com.google.protobuf.CodedOutputStream$ArrayEncoder.writeUInt32NoTag(CodedOutputStream.java)
+  A  SP 0x00007fd4c5ffaae0 IP 0x000000000044709a size=48    com.google.protobuf.CodedOutputStream$ArrayEncoder.writeStringNoTag(CodedOutputStream.java:1471)
+  A  SP 0x00007fd4c5ffab10 IP 0x0000000000446aa5 size=64    com.google.protobuf.CodedOutputStream$ArrayEncoder.writeString(CodedOutputStream.java:1225)
+  A  SP 0x00007fd4c5ffab50 IP 0x0000000000502c1a size=16    com.google.protobuf.GeneratedMessageV3.writeString(GeneratedMessageV3.java:3297)
+  A  SP 0x00007fd4c5ffab60 IP 0x0000000001a46fcf size=32    org.example.raw.Person.writeTo(Person.java:139)
+  A  SP 0x00007fd4c5ffab80 IP 0x000000000042c617 size=48    com.google.protobuf.AbstractMessageLite.toByteArray(AbstractMessageLite.java:71)
+  i  SP 0x00007fd4c5ffabb0 IP 0x0000000001a38fc5 size=64    org.example.PersonResource$$Lambda$6f969c26baf3c77d91e10ffa3cd6c181553ac819.apply(Unknown Source)
+  i  SP 0x00007fd4c5ffabb0 IP 0x0000000001a38fc5 size=64    java.util.Optional.map(Optional.java:260)
+  i  SP 0x00007fd4c5ffabb0 IP 0x0000000001a38fc5 size=64    org.example.PersonResource.getPerson(PersonResource.java:41)
+  A  SP 0x00007fd4c5ffabb0 IP 0x0000000001a38fc5 size=64    org.example.PersonResource$quarkusrestinvoker$getPerson_2dea67e581e08d4ea0c6f666253da93c6d13aa5a.invoke(Unknown Source)
+  A  SP 0x00007fd4c5ffabf0 IP 0x0000000001b0ee36 size=32    org.jboss.resteasy.reactive.server.handlers.InvocationHandler.handle(InvocationHandler.java:29)
+  A  SP 0x00007fd4c5ffac10 IP 0x0000000000c8fbf3 size=16    io.quarkus.resteasy.reactive.server.runtime.QuarkusResteasyReactiveRequestContext.invokeHandler(QuarkusResteasyReactiveRequestContext.java:141)
+  A  SP 0x00007fd4c5ffac20 IP 0x0000000001ab8e8c size=80    org.jboss.resteasy.reactive.common.core.AbstractResteasyReactiveContext.run(AbstractResteasyReactiveContext.java:147)
+  A  SP 0x00007fd4c5ffac70 IP 0x0000000000de1616 size=80    io.quarkus.vertx.core.runtime.VertxCoreRecorder$14.runWith(VertxCoreRecorder.java:582)
+  A  SP 0x00007fd4c5ffacc0 IP 0x0000000001b2b8af size=48    org.jboss.threads.EnhancedQueueExecutor$Task.run(EnhancedQueueExecutor.java:2513)
+  A  SP 0x00007fd4c5ffacf0 IP 0x0000000001b2c496 size=80    org.jboss.threads.EnhancedQueueExecutor$ThreadBody.run(EnhancedQueueExecutor.java:1538)
+  i  SP 0x00007fd4c5ffad40 IP 0x0000000001b352b2 size=48    org.jboss.threads.DelegatingRunnable.run(DelegatingRunnable.java:29)
+  A  SP 0x00007fd4c5ffad40 IP 0x0000000001b352b2 size=48    org.jboss.threads.ThreadLocalResettingRunnable.run(ThreadLocalResettingRunnable.java:29)
+  A  SP 0x00007fd4c5ffad70 IP 0x0000000000bb1194 size=32    io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+  i  SP 0x00007fd4c5ffad90 IP 0x00000000012cb43b size=32    java.lang.Thread.runWith(Thread.java:1596)
+  A  SP 0x00007fd4c5ffad90 IP 0x00000000012cb43b size=32    java.lang.Thread.run(Thread.java:1583)
+  A  SP 0x00007fd4c5ffadb0 IP 0x00000000006b6c9d size=48    com.oracle.svm.core.thread.PlatformThreads.threadStartRoutine(PlatformThreads.java:833)
+  A  SP 0x00007fd4c5ffade0 IP 0x000000000064af6b size=32    com.oracle.svm.core.posix.thread.PosixPlatformThreads.pthreadStartRoutine(PosixPlatformThreads.java:211)
+  A  SP 0x00007fd4c5ffae00 IP 0x000000000057eaf0 size=96    com.oracle.svm.core.code.IsolateEnterStub.PosixPlatformThreads_pthreadStartRoutine_38d96cbc1a188a6051c29be1299afe681d67942e(IsolateEnterStub.java:0)
+  
+Threads:
+  0x00007fd45c000b80 STATUS_IN_NATIVE (ALLOW_SAFEPOINT) "vert.x-eventloop-thread-15" - 0x00007fd4cf14b780, stack(0x00007fd46b000000,0x00007fd46b7ff000)
+  0x00007fd460000b80 STATUS_IN_NATIVE (ALLOW_SAFEPOINT) "vert.x-eventloop-thread-14" - 0x00007fd4cf14a5f0, stack(0x00007fd46b801000,0x00007fd46c000000)
+  0x00007fd464000b80 STATUS_IN_NATIVE (ALLOW_SAFEPOINT) "vert.x-eventloop-thread-13" - 0x00007fd4cf149460, stack(0x00007fd4887fb000,0x00007fd488ffa000)
+  0x00007fd470000b80 STATUS_IN_NATIVE (ALLOW_SAFEPOINT) "vert.x-eventloop-thread-12" - 0x00007fd4cf1482d8, stack(0x00007fd488ffc000,0x00007fd4897fb000)
+  0x00007fd46c000b80 STATUS_IN_NATIVE (ALLOW_SAFEPOINT) "vert.x-eventloop-thread-11" - 0x00007fd4cf147150, stack(0x00007fd4897fd000,0x00007fd489ffc000)
+  0x00007fd474000b80 STATUS_IN_NATIVE (ALLOW_SAFEPOINT) "vert.x-eventloop-thread-9" - 0x00007fd4cf144dc8, stack(0x00007fd48a7ff000,0x00007fd48affe000)
+  0x00007fd478000b80 STATUS_IN_NATIVE (ALLOW_SAFEPOINT) "vert.x-eventloop-thread-10" - 0x00007fd4cf145f48, stack(0x00007fd489ffe000,0x00007fd48a7fd000)
+  0x00007fd480000b80 STATUS_IN_NATIVE (ALLOW_SAFEPOINT) "vert.x-eventloop-thread-7" - 0x00007fd4cf142ad8, stack(0x00007fd48b801000,0x00007fd48c000000)
+  0x00007fd47c000b80 STATUS_IN_NATIVE (ALLOW_SAFEPOINT) "vert.x-eventloop-thread-8" - 0x00007fd4cf143c50, stack(0x00007fd48b000000,0x00007fd48b7ff000)
+  0x00007fd484000b80 STATUS_IN_NATIVE (ALLOW_SAFEPOINT) "vert.x-eventloop-thread-6" - 0x00007fd4cf141968, stack(0x00007fd4a87fb000,0x00007fd4a8ffa000)
+  0x00007fd490000b80 STATUS_IN_NATIVE (ALLOW_SAFEPOINT) "vert.x-eventloop-thread-5" - 0x00007fd4cf1407f8, stack(0x00007fd4a8ffc000,0x00007fd4a97fb000)
+  0x00007fd48c000b80 STATUS_IN_NATIVE (ALLOW_SAFEPOINT) "vert.x-eventloop-thread-4" - 0x00007fd4cf13f690, stack(0x00007fd4a97fd000,0x00007fd4a9ffc000)
+  0x00007fd498000b80 STATUS_IN_NATIVE (ALLOW_SAFEPOINT) "vert.x-eventloop-thread-3" - 0x00007fd4cf13e528, stack(0x00007fd4a9ffe000,0x00007fd4aa7fd000)
+  0x00007fd494000b80 STATUS_IN_NATIVE (ALLOW_SAFEPOINT) "vert.x-acceptor-thread-0" - 0x00007fd4cf30f328, stack(0x00007fd4aa7ff000,0x00007fd4aaffe000)
+  0x00007fd4a0000b80 STATUS_IN_NATIVE (ALLOW_SAFEPOINT) "vert.x-eventloop-thread-2" - 0x00007fd4cf13d3c8, stack(0x00007fd4ab000000,0x00007fd4ab7ff000)
+  0x00007fd49c000b80 STATUS_IN_NATIVE (ALLOW_SAFEPOINT) "vert.x-eventloop-thread-1" - 0x00007fd4cf13c268, stack(0x00007fd4ab801000,0x00007fd4ac000000)
+  0x00007fd4a4000b80 STATUS_IN_NATIVE (ALLOW_SAFEPOINT) "vert.x-eventloop-thread-0" - 0x00007fd4cf13b110, stack(0x00007fd4c47fb000,0x00007fd4c4ffa000)
+  0x00007fd4b0000b80 STATUS_IN_NATIVE (ALLOW_SAFEPOINT) "vertx-blocked-thread-checker" - 0x00007fd4cefe4970, daemon, stack(0x00007fd4c4ffc000,0x00007fd4c57fb000)
+  0x00007fd4bc000b80 STATUS_IN_JAVA (PREVENT_VM_FROM_REACHING_SAFEPOINT) "executor-thread-1" - 0x00007fd4cef957f0, daemon, stack(0x00007fd4c57fd000,0x00007fd4c5ffc000)
+  0x00007fd4ac000b80 STATUS_IN_NATIVE (ALLOW_SAFEPOINT) "Reference Reaper #3" - 0x00007fd4ced820f0, daemon, stack(0x00007fd4c5ffe000,0x00007fd4c67fd000)
+  0x00007fd4b8000b80 STATUS_IN_NATIVE (ALLOW_SAFEPOINT) "Reference Reaper #2" - 0x00007fd4ced81c28, daemon, stack(0x00007fd4c67ff000,0x00007fd4c6ffe000)
+  0x00007fd4b4000b80 STATUS_IN_NATIVE (ALLOW_SAFEPOINT) "Reference Reaper #1" - 0x00007fd4ced81760, daemon, stack(0x00007fd4c7000000,0x00007fd4c77ff000)
+  0x00007fd4c0000b80 STATUS_IN_NATIVE (ALLOW_SAFEPOINT) "Signal Dispatcher" - 0x00007fd4ceb3bf20, daemon, stack(0x00007fd4cc200000,0x00007fd4cc9ff000)
+  0x00007fd4c8000b80 STATUS_IN_NATIVE (ALLOW_SAFEPOINT) "Reference Handler" - 0x00007fd4cdd777e8, daemon, stack(0x00007fd4cca01000,0x00007fd4cd200000)
+  0x0000000003c2f300 STATUS_IN_NATIVE (ALLOW_SAFEPOINT) "main" - 0x00007fd4cdd77868, stack(0x00007fff140cf000,0x00007fff148ce000)
+  
+No VMOperation in progress
+
+The 30 most recent VM operation status changes:
+  
+VM mutexes:
+  mutex "RealLog.backTracePrinterMutex" is unlocked.
+  mutex "freeList" is unlocked.
+  mutex "mainVMOperationControlWorkQueue" is unlocked.
+  mutex "referencePendingList" is unlocked.
+  mutex "thread" is unlocked.
+  
+General information:
+  VM version: 21.0.2+13-LTS, linux/amd64
+  Current timestamp: 1707126152827
+  VM uptime: 2.956s
+  AOT compiled code: 0x0000000000407000 - 0x00000000021a832f
+  CPU features used for AOT compiled code: CX8, CMOV, FXSR, MMX, SSE, SSE2, SSE3, SSSE3, SSE4_1, SSE4_2, POPCNT, LZCNT, AVX, AVX2, BMI1, BMI2, FMA
+  
+Command line: 
+
+Heap settings and statistics:
+  Supports isolates: true
+  Heap base: 0x00007fd4cd200000
+  Object reference size: 4
+  Aligned chunk size: 524288
+  Large array threshold: 131072
+  Incremental collections: 0
+  Complete collections: 0
+  
+Heap usage:
+  Eden: 16.00M (0.50M in 1 aligned chunks, 0.00M in 0 unaligned chunks)
+  Old: 0.00M (0.00M in 0 aligned chunks, 0.00M in 0 unaligned chunks)
+  
+Native image heap boundaries:
+  ReadOnly Primitives: 0x00007fd4cd280830 - 0x00007fd4cd724140
+  ReadOnly References: 0x00007fd4cd724140 - 0x00007fd4cda283d0
+  ReadOnly Relocatables: 0x00007fd4cda29000 - 0x00007fd4cdbdb4a8
+  Writable Primitives: 0x00007fd4cdbdc000 - 0x00007fd4cdd125c8
+  Writable References: 0x00007fd4cdd125c8 - 0x00007fd4ce108e50
+  Writable Huge: 0x00007fd4ce180038 - 0x00007fd4ce2320d8
+  ReadOnly Huge: 0x00007fd4ce233038 - 0x00007fd4cea86850
+  
+Heap chunks: E=eden, S=survivor, O=old, F=free; A=aligned chunk, U=unaligned chunk; T=to space
+  |0x00007fd4ced80000|0x00007fd4ced80830, 0x00007fd4ced978d0, 0x00007fd4cee00000| 18%|  E|A|
+  
+Segfault detected, aborting process. Use '-XX:-InstallSegfaultHandler' to disable the segfault handler at run time and create a core dump instead. Rebuild with '-R:-InstallSegfaultHandler' to disable the handler permanently at build time.
+
